@@ -1,0 +1,35 @@
+{
+    "name": "anggagewor/development",
+    "description": "Development",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Angga Purnama",
+            "email": "anggagewor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "symfony/var-dumper": "^4.2",
+        "psr/http-message": "^1.0",
+        "pimple/pimple": "^3.2",
+        "nikic/fast-route": "^1.3",
+        "container-interop/container-interop": "^1.2",
+        "psr/container": "^1.0",
+        "monolog/monolog": "^1.24",
+        "paragonie/random_compat": "^9.99",
+        "twig/twig": "^2.7",
+        "maximebf/debugbar": "^1.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\": "modules/",
+            "System\\": "system/"
+        }
+    },
+    "provide": {
+        "psr/http-message-implementation": "1.0"
+    }
+}
