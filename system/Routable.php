@@ -1,4 +1,5 @@
 <?php
+
 namespace System;
 
 use Psr\Container\ContainerInterface;
@@ -12,55 +13,65 @@ use Psr\Container\ContainerInterface;
 abstract class Routable
 {
     use CallableResolverAwareTrait;
-
+    
     /**
      * Route callable
      *
      * @var callable
      */
     protected $callable;
-
+    
     /**
      * Container
      *
      * @var ContainerInterface
      */
     protected $container;
-
+    
     /**
      * Route middleware
      *
      * @var callable[]
      */
     protected $middleware = [];
-
+    
     /**
      * Route pattern
      *
      * @var string
      */
     protected $pattern;
-
+    
     /**
      * Get the middleware registered for the group
      *
      * @return callable[]
      */
-    public function getMiddleware()
+    public function getMiddleware ()
     {
         return $this->middleware;
     }
-
+    
     /**
      * Get the route pattern
      *
      * @return string
      */
-    public function getPattern()
+    public function getPattern ()
     {
         return $this->pattern;
     }
-
+    
+    /**
+     * Set the route pattern
+     *
+     * @param string $newPattern
+     */
+    public function setPattern ( $newPattern )
+    {
+        $this->pattern = $newPattern;
+    }
+    
     /**
      * Set container for use with resolveCallable
      *
@@ -68,12 +79,12 @@ abstract class Routable
      *
      * @return self
      */
-    public function setContainer(ContainerInterface $container)
+    public function setContainer ( ContainerInterface $container )
     {
         $this->container = $container;
         return $this;
     }
-
+    
     /**
      * Prepend middleware to the middleware collection
      *
@@ -81,19 +92,9 @@ abstract class Routable
      *
      * @return static
      */
-    public function add($callable)
+    public function add ( $callable )
     {
-        $this->middleware[] = new DeferredCallable($callable, $this->container);
+        $this->middleware[] = new DeferredCallable( $callable, $this->container );
         return $this;
-    }
-
-    /**
-     * Set the route pattern
-     *
-     * @param string $newPattern
-     */
-    public function setPattern($newPattern)
-    {
-        $this->pattern = $newPattern;
     }
 }

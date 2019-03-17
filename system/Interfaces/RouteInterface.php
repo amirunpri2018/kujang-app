@@ -1,9 +1,10 @@
 <?php
+
 namespace System\Interfaces;
 
 use InvalidArgumentException;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Route Interface
@@ -13,38 +14,38 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface RouteInterface
 {
-
+    
     /**
      * Retrieve a specific route argument
      *
-     * @param string $name
+     * @param string      $name
      * @param string|null $default
      *
      * @return string|null
      */
-    public function getArgument($name, $default = null);
-
+    public function getArgument ( $name, $default = null );
+    
     /**
      * Get route arguments
      *
      * @return string[]
      */
-    public function getArguments();
-
+    public function getArguments ();
+    
     /**
      * Get route name
      *
      * @return null|string
      */
-    public function getName();
-
+    public function getName ();
+    
     /**
      * Get route pattern
      *
      * @return string
      */
-    public function getPattern();
-
+    public function getPattern ();
+    
     /**
      * Set a route argument
      *
@@ -53,8 +54,8 @@ interface RouteInterface
      *
      * @return self
      */
-    public function setArgument($name, $value);
-
+    public function setArgument ( $name, $value );
+    
     /**
      * Replace route arguments
      *
@@ -62,8 +63,8 @@ interface RouteInterface
      *
      * @return self
      */
-    public function setArguments(array $arguments);
-
+    public function setArguments ( array $arguments );
+    
     /**
      * Set output buffering mode
      *
@@ -73,8 +74,8 @@ interface RouteInterface
      *
      * @throws InvalidArgumentException If an unknown buffering mode is specified
      */
-    public function setOutputBuffering($mode);
-
+    public function setOutputBuffering ( $mode );
+    
     /**
      * Set route name
      *
@@ -83,8 +84,8 @@ interface RouteInterface
      * @return static
      * @throws InvalidArgumentException if the route name is not a string
      */
-    public function setName($name);
-
+    public function setName ( $name );
+    
     /**
      * Add middleware
      *
@@ -94,16 +95,16 @@ interface RouteInterface
      *
      * @return RouteInterface
      */
-    public function add($callable);
-
+    public function add ( $callable );
+    
     /**
      * Prepare the route for use
      *
      * @param ServerRequestInterface $request
-     * @param array $arguments
+     * @param array                  $arguments
      */
-    public function prepare(ServerRequestInterface $request, array $arguments);
-
+    public function prepare ( ServerRequestInterface $request, array $arguments );
+    
     /**
      * Run route
      *
@@ -112,11 +113,12 @@ interface RouteInterface
      * back to the Application.
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
+     * @param ResponseInterface      $response
+     *
      * @return ResponseInterface
      */
-    public function run(ServerRequestInterface $request, ResponseInterface $response);
-
+    public function run ( ServerRequestInterface $request, ResponseInterface $response );
+    
     /**
      * Dispatch route callable against current Request and Response objects
      *
@@ -129,5 +131,5 @@ interface RouteInterface
      *
      * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response);
+    public function __invoke ( ServerRequestInterface $request, ResponseInterface $response );
 }

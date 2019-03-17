@@ -1,4 +1,5 @@
 <?php
+
 namespace System\Interfaces\Http;
 
 /**
@@ -9,5 +10,5 @@ namespace System\Interfaces\Http;
  */
 interface EnvironmentInterface
 {
-    public static function mock(array $settings = []);
+    public static function mock ( array $settings = [] );
 }

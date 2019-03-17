@@ -1,9 +1,10 @@
 <?php
+
 namespace System;
 
-use RuntimeException;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use UnexpectedValueException;
 
 /**
@@ -21,14 +22,35 @@ trait MiddlewareAwareTrait
      * @var callable
      */
     protected $tip;
-
+    
     /**
      * Middleware stack lock
      *
      * @var bool
      */
     protected $middlewareLock = false;
-
+    
+    /**
+     * Call middleware stack
+     *
+     * @param  ServerRequestInterface $request  A request object
+     * @param  ResponseInterface      $response A response object
+     *
+     * @return ResponseInterface
+     */
+    public function callMiddlewareStack ( ServerRequestInterface $request, ResponseInterface $response )
+    {
+        if ( is_null( $this->tip ) ) {
+            $this->seedMiddlewareStack();
+        }
+        /** @var callable $start */
+        $start                = $this->tip;
+        $this->middlewareLock = true;
+        $response             = $start( $request, $response );
+        $this->middlewareLock = false;
+        return $response;
+    }
+    
     /**
      * Add middleware
      *
@@ -38,21 +60,22 @@ trait MiddlewareAwareTrait
      *                           1. A Request object
      *                           2. A Response object
      *                           3. A "next" middleware callable
+     *
      * @return static
      *
      * @throws RuntimeException         If middleware is added while the stack is dequeuing
      * @throws UnexpectedValueException If the middleware doesn't return a Psr\Http\Message\ResponseInterface
      */
-    protected function addMiddleware(callable $callable)
+    protected function addMiddleware ( callable $callable )
     {
-        if ($this->middlewareLock) {
-            throw new RuntimeException('Middleware can’t be added once the stack is dequeuing');
+        if ( $this->middlewareLock ) {
+            throw new RuntimeException( 'Middleware can’t be added once the stack is dequeuing' );
         }
-
-        if (is_null($this->tip)) {
+        
+        if ( is_null( $this->tip ) ) {
             $this->seedMiddlewareStack();
         }
-        $next = $this->tip;
+        $next      = $this->tip;
         $this->tip = function (
             ServerRequestInterface $request,
             ResponseInterface $response
@@ -60,19 +83,19 @@ trait MiddlewareAwareTrait
             $callable,
             $next
         ) {
-            $result = call_user_func($callable, $request, $response, $next);
-            if ($result instanceof ResponseInterface === false) {
+            $result = call_user_func( $callable, $request, $response, $next );
+            if ( $result instanceof ResponseInterface === false ) {
                 throw new UnexpectedValueException(
                     'Middleware must return instance of \Psr\Http\Message\ResponseInterface'
                 );
             }
-
+            
             return $result;
         };
-
+        
         return $this;
     }
-
+    
     /**
      * Seed middleware stack with first callable
      *
@@ -80,35 +103,14 @@ trait MiddlewareAwareTrait
      *
      * @throws RuntimeException if the stack is seeded more than once
      */
-    protected function seedMiddlewareStack(callable $kernel = null)
+    protected function seedMiddlewareStack ( callable $kernel = null )
     {
-        if (!is_null($this->tip)) {
-            throw new RuntimeException('MiddlewareStack can only be seeded once.');
+        if ( !is_null( $this->tip ) ) {
+            throw new RuntimeException( 'MiddlewareStack can only be seeded once.' );
         }
-        if ($kernel === null) {
+        if ( $kernel === null ) {
             $kernel = $this;
         }
         $this->tip = $kernel;
-    }
-
-    /**
-     * Call middleware stack
-     *
-     * @param  ServerRequestInterface $request A request object
-     * @param  ResponseInterface      $response A response object
-     *
-     * @return ResponseInterface
-     */
-    public function callMiddlewareStack(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        if (is_null($this->tip)) {
-            $this->seedMiddlewareStack();
-        }
-        /** @var callable $start */
-        $start = $this->tip;
-        $this->middlewareLock = true;
-        $response = $start($request, $response);
-        $this->middlewareLock = false;
-        return $response;
     }
 }

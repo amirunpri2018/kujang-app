@@ -1,11 +1,12 @@
 <?php
+
 namespace System\Interfaces;
 
 /**
  * Resolves a callable.
  *
  * @package System
- * @since 3.0.0
+ * @since   3.0.0
  */
 interface CallableResolverInterface
 {
@@ -16,5 +17,5 @@ interface CallableResolverInterface
      *
      * @return callable
      */
-    public function resolve($toResolve);
+    public function resolve ( $toResolve );
 }

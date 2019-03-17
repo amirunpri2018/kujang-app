@@ -1,4 +1,5 @@
 <?php
+
 namespace System\Handlers\Strategies;
 
 use Psr\Http\Message\ResponseInterface;
@@ -10,7 +11,7 @@ use System\Interfaces\InvocationStrategyInterface;
  */
 class RequestResponseArgs implements InvocationStrategyInterface
 {
-
+    
     /**
      * Invoke a route callable with request, response and all route parameters
      * as individual arguments.
@@ -22,14 +23,15 @@ class RequestResponseArgs implements InvocationStrategyInterface
      *
      * @return mixed
      */
-    public function __invoke(
+    public function __invoke (
         callable $callable,
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $routeArguments
-    ) {
-        array_unshift($routeArguments, $request, $response);
-
-        return call_user_func_array($callable, $routeArguments);
+    )
+    {
+        array_unshift( $routeArguments, $request, $response );
+        
+        return call_user_func_array( $callable, $routeArguments );
     }
 }

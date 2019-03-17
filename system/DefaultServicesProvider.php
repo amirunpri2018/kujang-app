@@ -1,12 +1,13 @@
 <?php
+
 namespace System;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use System\Handlers\PhpError;
 use System\Handlers\Error;
-use System\Handlers\NotFound;
 use System\Handlers\NotAllowed;
+use System\Handlers\NotFound;
+use System\Handlers\PhpError;
 use System\Handlers\Strategies\RequestResponse;
 use System\Http\Environment;
 use System\Http\Headers;
@@ -27,21 +28,21 @@ class DefaultServicesProvider
      *
      * @param Container $container A DI container implementing ArrayAccess and container-interop.
      */
-    public function register($container)
+    public function register ( $container )
     {
-        if (!isset($container['environment'])) {
+        if ( !isset( $container[ 'environment' ] ) ) {
             /**
              * This service MUST return a shared instance
              * of \System\Interfaces\Http\EnvironmentInterface.
              *
              * @return EnvironmentInterface
              */
-            $container['environment'] = function () {
-                return new Environment($_SERVER);
+            $container[ 'environment' ] = function () {
+                return new Environment( $_SERVER );
             };
         }
-
-        if (!isset($container['request'])) {
+        
+        if ( !isset( $container[ 'request' ] ) ) {
             /**
              * PSR-7 Request object
              *
@@ -49,12 +50,12 @@ class DefaultServicesProvider
              *
              * @return ServerRequestInterface
              */
-            $container['request'] = function ($container) {
-                return Request::createFromEnvironment($container->get('environment'));
+            $container[ 'request' ] = function ( $container ) {
+                return Request::createFromEnvironment( $container->get( 'environment' ) );
             };
         }
-
-        if (!isset($container['response'])) {
+        
+        if ( !isset( $container[ 'response' ] ) ) {
             /**
              * PSR-7 Response object
              *
@@ -62,15 +63,15 @@ class DefaultServicesProvider
              *
              * @return ResponseInterface
              */
-            $container['response'] = function ($container) {
-                $headers = new Headers(['Content-Type' => 'text/html; charset=UTF-8']);
-                $response = new Response(200, $headers);
-
-                return $response->withProtocolVersion($container->get('settings')['httpVersion']);
+            $container[ 'response' ] = function ( $container ) {
+                $headers  = new Headers( [ 'Content-Type' => 'text/html; charset=UTF-8' ] );
+                $response = new Response( 200, $headers );
+                
+                return $response->withProtocolVersion( $container->get( 'settings' )[ 'httpVersion' ] );
             };
         }
-
-        if (!isset($container['router'])) {
+        
+        if ( !isset( $container[ 'router' ] ) ) {
             /**
              * This service MUST return a SHARED instance
              * of \System\Interfaces\RouterInterface.
@@ -79,35 +80,35 @@ class DefaultServicesProvider
              *
              * @return RouterInterface
              */
-            $container['router'] = function ($container) {
+            $container[ 'router' ] = function ( $container ) {
                 $routerCacheFile = false;
-                if (isset($container->get('settings')['routerCacheFile'])) {
-                    $routerCacheFile = $container->get('settings')['routerCacheFile'];
+                if ( isset( $container->get( 'settings' )[ 'routerCacheFile' ] ) ) {
+                    $routerCacheFile = $container->get( 'settings' )[ 'routerCacheFile' ];
                 }
-
-
-                $router = (new Router)->setCacheFile($routerCacheFile);
-                if (method_exists($router, 'setContainer')) {
-                    $router->setContainer($container);
+                
+                
+                $router = ( new Router )->setCacheFile( $routerCacheFile );
+                if ( method_exists( $router, 'setContainer' ) ) {
+                    $router->setContainer( $container );
                 }
-
+                
                 return $router;
             };
         }
-
-        if (!isset($container['foundHandler'])) {
+        
+        if ( !isset( $container[ 'foundHandler' ] ) ) {
             /**
              * This service MUST return a SHARED instance
              * of \System\Interfaces\InvocationStrategyInterface.
              *
              * @return InvocationStrategyInterface
              */
-            $container['foundHandler'] = function () {
+            $container[ 'foundHandler' ] = function () {
                 return new RequestResponse;
             };
         }
-
-        if (!isset($container['phpErrorHandler'])) {
+        
+        if ( !isset( $container[ 'phpErrorHandler' ] ) ) {
             /**
              * This service MUST return a callable
              * that accepts three arguments:
@@ -123,12 +124,12 @@ class DefaultServicesProvider
              *
              * @return callable
              */
-            $container['phpErrorHandler'] = function ($container) {
-                return new PhpError($container->get('settings')['displayErrorDetails']);
+            $container[ 'phpErrorHandler' ] = function ( $container ) {
+                return new PhpError( $container->get( 'settings' )[ 'displayErrorDetails' ] );
             };
         }
-
-        if (!isset($container['errorHandler'])) {
+        
+        if ( !isset( $container[ 'errorHandler' ] ) ) {
             /**
              * This service MUST return a callable
              * that accepts three arguments:
@@ -144,14 +145,14 @@ class DefaultServicesProvider
              *
              * @return callable
              */
-            $container['errorHandler'] = function ($container) {
+            $container[ 'errorHandler' ] = function ( $container ) {
                 return new Error(
-                    $container->get('settings')['displayErrorDetails']
+                    $container->get( 'settings' )[ 'displayErrorDetails' ]
                 );
             };
         }
-
-        if (!isset($container['notFoundHandler'])) {
+        
+        if ( !isset( $container[ 'notFoundHandler' ] ) ) {
             /**
              * This service MUST return a callable
              * that accepts two arguments:
@@ -164,12 +165,12 @@ class DefaultServicesProvider
              *
              * @return callable
              */
-            $container['notFoundHandler'] = function () {
+            $container[ 'notFoundHandler' ] = function () {
                 return new NotFound;
             };
         }
-
-        if (!isset($container['notAllowedHandler'])) {
+        
+        if ( !isset( $container[ 'notAllowedHandler' ] ) ) {
             /**
              * This service MUST return a callable
              * that accepts three arguments:
@@ -183,12 +184,12 @@ class DefaultServicesProvider
              *
              * @return callable
              */
-            $container['notAllowedHandler'] = function () {
+            $container[ 'notAllowedHandler' ] = function () {
                 return new NotAllowed;
             };
         }
-
-        if (!isset($container['callableResolver'])) {
+        
+        if ( !isset( $container[ 'callableResolver' ] ) ) {
             /**
              * Instance of \System\Interfaces\CallableResolverInterface
              *
@@ -196,8 +197,8 @@ class DefaultServicesProvider
              *
              * @return CallableResolverInterface
              */
-            $container['callableResolver'] = function ($container) {
-                return new CallableResolver($container);
+            $container[ 'callableResolver' ] = function ( $container ) {
+                return new CallableResolver( $container );
             };
         }
     }

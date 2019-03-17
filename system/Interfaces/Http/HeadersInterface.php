@@ -1,4 +1,5 @@
 <?php
+
 namespace System\Interfaces\Http;
 
 use System\Interfaces\CollectionInterface;
@@ -11,7 +12,7 @@ use System\Interfaces\CollectionInterface;
  */
 interface HeadersInterface extends CollectionInterface
 {
-    public function add($key, $value);
-
-    public function normalizeKey($key);
+    public function add ( $key, $value );
+    
+    public function normalizeKey ( $key );
 }

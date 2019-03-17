@@ -3,8 +3,8 @@
 namespace System\Exception;
 
 use Exception;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class SystemException extends Exception
 {
@@ -14,43 +14,43 @@ class SystemException extends Exception
      * @var ServerRequestInterface
      */
     protected $request;
-
+    
     /**
      * A response object to send to the HTTP client
      *
      * @var ResponseInterface
      */
     protected $response;
-
+    
     /**
      * Create new exception
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
+     * @param ResponseInterface      $response
      */
-    public function __construct(ServerRequestInterface $request, ResponseInterface $response)
+    public function __construct ( ServerRequestInterface $request, ResponseInterface $response )
     {
         parent::__construct();
-        $this->request = $request;
+        $this->request  = $request;
         $this->response = $response;
     }
-
+    
     /**
      * Get request
      *
      * @return ServerRequestInterface
      */
-    public function getRequest()
+    public function getRequest ()
     {
         return $this->request;
     }
-
+    
     /**
      * Get response
      *
      * @return ResponseInterface
      */
-    public function getResponse()
+    public function getResponse ()
     {
         return $this->response;
     }

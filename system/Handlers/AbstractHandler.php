@@ -1,4 +1,5 @@
 <?php
+
 namespace System\Handlers;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -13,13 +14,14 @@ abstract class AbstractHandler
      *
      * @var array
      */
-    protected $knownContentTypes = [
-        'application/json',
-        'application/xml',
-        'text/xml',
-        'text/html',
-    ];
-
+    protected $knownContentTypes
+        = [
+            'application/json',
+            'application/xml',
+            'text/xml',
+            'text/html',
+        ];
+    
     /**
      * Determine which content type we know about is wanted using Accept header
      *
@@ -28,25 +30,26 @@ abstract class AbstractHandler
      * as willdurand/negotiation for any other situation.
      *
      * @param ServerRequestInterface $request
+     *
      * @return string
      */
-    protected function determineContentType(ServerRequestInterface $request)
+    protected function determineContentType ( ServerRequestInterface $request )
     {
-        $acceptHeader = $request->getHeaderLine('Accept');
-        $selectedContentTypes = array_intersect(explode(',', $acceptHeader), $this->knownContentTypes);
-
-        if (count($selectedContentTypes)) {
-            return current($selectedContentTypes);
+        $acceptHeader         = $request->getHeaderLine( 'Accept' );
+        $selectedContentTypes = array_intersect( explode( ',', $acceptHeader ), $this->knownContentTypes );
+        
+        if ( count( $selectedContentTypes ) ) {
+            return current( $selectedContentTypes );
         }
-
+        
         // handle +json and +xml specially
-        if (preg_match('/\+(json|xml)/', $acceptHeader, $matches)) {
-            $mediaType = 'application/' . $matches[1];
-            if (in_array($mediaType, $this->knownContentTypes)) {
+        if ( preg_match( '/\+(json|xml)/', $acceptHeader, $matches ) ) {
+            $mediaType = 'application/' . $matches[ 1 ];
+            if ( in_array( $mediaType, $this->knownContentTypes ) ) {
                 return $mediaType;
             }
         }
-
+        
         return 'text/html';
     }
 }

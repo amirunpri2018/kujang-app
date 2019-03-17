@@ -1,9 +1,9 @@
 <?php
+
 namespace System\Http;
 
 use InvalidArgumentException;
-use \Psr\Http\Message\UriInterface;
-use System\Http\Environment;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Value object representing a URI.
@@ -33,63 +33,63 @@ class Uri implements UriInterface
      * @var string
      */
     protected $scheme = '';
-
+    
     /**
      * Uri user
      *
      * @var string
      */
     protected $user = '';
-
+    
     /**
      * Uri password
      *
      * @var string
      */
     protected $password = '';
-
+    
     /**
      * Uri host
      *
      * @var string
      */
     protected $host = '';
-
+    
     /**
      * Uri port number
      *
      * @var null|int
      */
     protected $port;
-
+    
     /**
      * Uri base path
      *
      * @var string
      */
     protected $basePath = '';
-
+    
     /**
      * Uri path
      *
      * @var string
      */
     protected $path = '';
-
+    
     /**
      * Uri query string (without "?" prefix)
      *
      * @var string
      */
     protected $query = '';
-
+    
     /**
      * Uri fragment string (without "#" prefix)
      *
      * @var string
      */
     protected $fragment = '';
-
+    
     /**
      * Create new Uri.
      *
@@ -102,7 +102,7 @@ class Uri implements UriInterface
      * @param string $user     Uri user.
      * @param string $password Uri password.
      */
-    public function __construct(
+    public function __construct (
         $scheme,
         $host,
         $port = null,
@@ -111,44 +111,143 @@ class Uri implements UriInterface
         $fragment = '',
         $user = '',
         $password = ''
-    ) {
-        $this->scheme = $this->filterScheme($scheme);
-        $this->host = $host;
-        $this->port = $this->filterPort($port);
-        $this->path = empty($path) ? '/' : $this->filterPath($path);
-        $this->query = $this->filterQuery($query);
-        $this->fragment = $this->filterQuery($fragment);
-        $this->user = $user;
+    )
+    {
+        $this->scheme   = $this->filterScheme( $scheme );
+        $this->host     = $host;
+        $this->port     = $this->filterPort( $port );
+        $this->path     = empty( $path ) ? '/' : $this->filterPath( $path );
+        $this->query    = $this->filterQuery( $query );
+        $this->fragment = $this->filterQuery( $fragment );
+        $this->user     = $user;
         $this->password = $password;
     }
-
+    
+    /**
+     * Filter Uri scheme.
+     *
+     * @param  string $scheme Raw Uri scheme.
+     *
+     * @return string
+     *
+     * @throws InvalidArgumentException If the Uri scheme is not a string.
+     * @throws InvalidArgumentException If Uri scheme is not "", "https", or "http".
+     */
+    protected function filterScheme ( $scheme )
+    {
+        static $valid = [
+            ''      => true,
+            'https' => true,
+            'http'  => true,
+        ];
+        
+        if ( !is_string( $scheme ) && !method_exists( $scheme, '__toString' ) ) {
+            throw new InvalidArgumentException( 'Uri scheme must be a string' );
+        }
+        
+        $scheme = str_replace( '://', '', strtolower( (string)$scheme ) );
+        if ( !isset( $valid[ $scheme ] ) ) {
+            throw new InvalidArgumentException( 'Uri scheme must be one of: "", "https", "http"' );
+        }
+        
+        return $scheme;
+    }
+    
+    /**
+     * Filter Uri port.
+     *
+     * @param  null|int $port The Uri port number.
+     *
+     * @return null|int
+     *
+     * @throws InvalidArgumentException If the port is invalid.
+     */
+    protected function filterPort ( $port )
+    {
+        if ( is_null( $port ) || ( is_integer( $port ) && ( $port >= 1 && $port <= 65535 ) ) ) {
+            return $port;
+        }
+        
+        throw new InvalidArgumentException( 'Uri port must be null or an integer between 1 and 65535 (inclusive)' );
+    }
+    
+    /********************************************************************************
+     * Scheme
+     *******************************************************************************/
+    
+    /**
+     * Filter Uri path.
+     *
+     * This method percent-encodes all reserved
+     * characters in the provided path string. This method
+     * will NOT double-encode characters that are already
+     * percent-encoded.
+     *
+     * @param  string $path The raw uri path.
+     *
+     * @return string       The RFC 3986 percent-encoded uri path.
+     * @link   http://www.faqs.org/rfcs/rfc3986.html
+     */
+    protected function filterPath ( $path )
+    {
+        return preg_replace_callback(
+            '/(?:[^a-zA-Z0-9_\-\.~:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
+            function ( $match ) {
+                return rawurlencode( $match[ 0 ] );
+            },
+            $path
+        );
+    }
+    
+    /**
+     * Filters the query string or fragment of a URI.
+     *
+     * @param string $query The raw uri query string.
+     *
+     * @return string The percent-encoded query string.
+     */
+    protected function filterQuery ( $query )
+    {
+        return preg_replace_callback(
+            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/',
+            function ( $match ) {
+                return rawurlencode( $match[ 0 ] );
+            },
+            $query
+        );
+    }
+    
     /**
      * Create new Uri from string.
      *
      * @param  string $uri Complete Uri string
-     *     (i.e., https://user:pass@host:443/path?query).
+     *                     (i.e., https://user:pass@host:443/path?query).
      *
      * @return self
      */
-    public static function createFromString($uri)
+    public static function createFromString ( $uri )
     {
-        if (!is_string($uri) && !method_exists($uri, '__toString')) {
-            throw new InvalidArgumentException('Uri must be a string');
+        if ( !is_string( $uri ) && !method_exists( $uri, '__toString' ) ) {
+            throw new InvalidArgumentException( 'Uri must be a string' );
         }
-
-        $parts = parse_url($uri);
-        $scheme = isset($parts['scheme']) ? $parts['scheme'] : '';
-        $user = isset($parts['user']) ? $parts['user'] : '';
-        $pass = isset($parts['pass']) ? $parts['pass'] : '';
-        $host = isset($parts['host']) ? $parts['host'] : '';
-        $port = isset($parts['port']) ? $parts['port'] : null;
-        $path = isset($parts['path']) ? $parts['path'] : '';
-        $query = isset($parts['query']) ? $parts['query'] : '';
-        $fragment = isset($parts['fragment']) ? $parts['fragment'] : '';
-
-        return new static($scheme, $host, $port, $path, $query, $fragment, $user, $pass);
+        
+        $parts    = parse_url( $uri );
+        $scheme   = isset( $parts[ 'scheme' ] ) ? $parts[ 'scheme' ] : '';
+        $user     = isset( $parts[ 'user' ] ) ? $parts[ 'user' ] : '';
+        $pass     = isset( $parts[ 'pass' ] ) ? $parts[ 'pass' ] : '';
+        $host     = isset( $parts[ 'host' ] ) ? $parts[ 'host' ] : '';
+        $port     = isset( $parts[ 'port' ] ) ? $parts[ 'port' ] : null;
+        $path     = isset( $parts[ 'path' ] ) ? $parts[ 'path' ] : '';
+        $query    = isset( $parts[ 'query' ] ) ? $parts[ 'query' ] : '';
+        $fragment = isset( $parts[ 'fragment' ] ) ? $parts[ 'fragment' ] : '';
+        
+        return new static( $scheme, $host, $port, $path, $query, $fragment, $user, $pass );
     }
-
+    
+    /********************************************************************************
+     * Authority
+     *******************************************************************************/
+    
     /**
      * Create new Uri from environment.
      *
@@ -156,83 +255,364 @@ class Uri implements UriInterface
      *
      * @return self
      */
-    public static function createFromEnvironment(Environment $env)
+    public static function createFromEnvironment ( Environment $env )
     {
         // Scheme
-        $isSecure = $env->get('HTTPS');
-        $scheme = (empty($isSecure) || $isSecure === 'off') ? 'http' : 'https';
-
+        $isSecure = $env->get( 'HTTPS' );
+        $scheme   = ( empty( $isSecure ) || $isSecure === 'off' ) ? 'http' : 'https';
+        
         // Authority: Username and password
-        $username = $env->get('PHP_AUTH_USER', '');
-        $password = $env->get('PHP_AUTH_PW', '');
-
+        $username = $env->get( 'PHP_AUTH_USER', '' );
+        $password = $env->get( 'PHP_AUTH_PW', '' );
+        
         // Authority: Host and Port
-        if ($env->has('HTTP_HOST')) {
-            $host = $env->get('HTTP_HOST');
+        if ( $env->has( 'HTTP_HOST' ) ) {
+            $host = $env->get( 'HTTP_HOST' );
             // set a port default
             $port = null;
         } else {
-            $host = $env->get('SERVER_NAME');
+            $host = $env->get( 'SERVER_NAME' );
             // set a port default
-            $port = (int)$env->get('SERVER_PORT', 80);
+            $port = (int)$env->get( 'SERVER_PORT', 80 );
         }
-
-        if (preg_match('/^(\[[a-fA-F0-9:.]+\])(:\d+)?\z/', $host, $matches)) {
-            $host = $matches[1];
-
-            if (isset($matches[2])) {
-                $port = (int) substr($matches[2], 1);
+        
+        if ( preg_match( '/^(\[[a-fA-F0-9:.]+\])(:\d+)?\z/', $host, $matches ) ) {
+            $host = $matches[ 1 ];
+            
+            if ( isset( $matches[ 2 ] ) ) {
+                $port = (int)substr( $matches[ 2 ], 1 );
             }
         } else {
-            $pos = strpos($host, ':');
-            if ($pos !== false) {
-                $port = (int) substr($host, $pos + 1);
-                $host = strstr($host, ':', true);
+            $pos = strpos( $host, ':' );
+            if ( $pos !== false ) {
+                $port = (int)substr( $host, $pos + 1 );
+                $host = strstr( $host, ':', true );
             }
         }
-
+        
         // Path
-        $requestScriptName = parse_url($env->get('SCRIPT_NAME'), PHP_URL_PATH);
-        $requestScriptDir = dirname($requestScriptName);
-
+        $requestScriptName = parse_url( $env->get( 'SCRIPT_NAME' ), PHP_URL_PATH );
+        $requestScriptDir  = dirname( $requestScriptName );
+        
         // parse_url() requires a full URL. As we don't extract the domain name or scheme,
         // we use a stand-in.
-        $requestUri = parse_url('http://example.com' . $env->get('REQUEST_URI'), PHP_URL_PATH);
-
-        $basePath = '';
+        $requestUri = parse_url( 'http://example.com' . $env->get( 'REQUEST_URI' ), PHP_URL_PATH );
+        
+        $basePath    = '';
         $virtualPath = $requestUri;
-        if (stripos($requestUri, $requestScriptName) === 0) {
+        if ( stripos( $requestUri, $requestScriptName ) === 0 ) {
             $basePath = $requestScriptName;
-        } elseif ($requestScriptDir !== '/' && stripos($requestUri, $requestScriptDir) === 0) {
+        } elseif ( $requestScriptDir !== '/' && stripos( $requestUri, $requestScriptDir ) === 0 ) {
             $basePath = $requestScriptDir;
         }
-
-        if ($basePath) {
-            $virtualPath = ltrim(substr($requestUri, strlen($basePath)), '/');
+        
+        if ( $basePath ) {
+            $virtualPath = ltrim( substr( $requestUri, strlen( $basePath ) ), '/' );
         }
-
+        
         // Query string
-        $queryString = $env->get('QUERY_STRING', '');
-        if ($queryString === '') {
-            $queryString = parse_url('http://example.com' . $env->get('REQUEST_URI'), PHP_URL_QUERY);
+        $queryString = $env->get( 'QUERY_STRING', '' );
+        if ( $queryString === '' ) {
+            $queryString = parse_url( 'http://example.com' . $env->get( 'REQUEST_URI' ), PHP_URL_QUERY );
         }
-
+        
         // Fragment
         $fragment = '';
-
+        
         // Build Uri
-        $uri = new static($scheme, $host, $port, $virtualPath, $queryString, $fragment, $username, $password);
-        if ($basePath) {
-            $uri = $uri->withBasePath($basePath);
+        $uri = new static( $scheme, $host, $port, $virtualPath, $queryString, $fragment, $username, $password );
+        if ( $basePath ) {
+            $uri = $uri->withBasePath( $basePath );
         }
-
+        
         return $uri;
     }
-
+    
+    /**
+     * Set base path.
+     *
+     * Note: This method is not part of the PSR-7 standard.
+     *
+     * @param  string $basePath
+     *
+     * @return self
+     */
+    public function withBasePath ( $basePath )
+    {
+        if ( !is_string( $basePath ) ) {
+            throw new InvalidArgumentException( 'Uri path must be a string' );
+        }
+        if ( !empty( $basePath ) ) {
+            $basePath = '/' . trim( $basePath, '/' ); // <-- Trim on both sides
+        }
+        $clone = clone $this;
+        
+        if ( $basePath !== '/' ) {
+            $clone->basePath = $this->filterPath( $basePath );
+        }
+        
+        return $clone;
+    }
+    
+    /**
+     * Return an instance with the specified scheme.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified scheme.
+     *
+     * Implementations MUST support the schemes "http" and "https" case
+     * insensitively, and MAY accommodate other schemes if required.
+     *
+     * An empty scheme is equivalent to removing the scheme.
+     *
+     * @param string $scheme The scheme to use with the new instance.
+     *
+     * @return self A new instance with the specified scheme.
+     * @throws \InvalidArgumentException for invalid or unsupported schemes.
+     */
+    public function withScheme ( $scheme )
+    {
+        $scheme        = $this->filterScheme( $scheme );
+        $clone         = clone $this;
+        $clone->scheme = $scheme;
+        
+        return $clone;
+    }
+    
+    /**
+     * Return an instance with the specified user information.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified user information.
+     *
+     * Password is optional, but the user information MUST include the
+     * user; an empty string for the user is equivalent to removing user
+     * information.
+     *
+     * @param string      $user     The user name to use for authority.
+     * @param null|string $password The password associated with $user.
+     *
+     * @return self A new instance with the specified user information.
+     */
+    public function withUserInfo ( $user, $password = null )
+    {
+        $clone       = clone $this;
+        $clone->user = $this->filterUserInfo( $user );
+        if ( '' !== $clone->user ) {
+            $clone->password = !in_array( $password, [ null, '' ], true ) ? $this->filterUserInfo( $password ) : '';
+        } else {
+            $clone->password = '';
+        }
+        
+        return $clone;
+    }
+    
+    /**
+     * Filters the user info string.
+     *
+     * @param string $query The raw uri query string.
+     *
+     * @return string The percent-encoded query string.
+     */
+    protected function filterUserInfo ( $query )
+    {
+        return preg_replace_callback(
+            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=]+|%(?![A-Fa-f0-9]{2}))/u',
+            function ( $match ) {
+                return rawurlencode( $match[ 0 ] );
+            },
+            $query
+        );
+    }
+    
+    /**
+     * Return an instance with the specified host.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified host.
+     *
+     * An empty host value is equivalent to removing the host.
+     *
+     * @param string $host The hostname to use with the new instance.
+     *
+     * @return self A new instance with the specified host.
+     * @throws \InvalidArgumentException for invalid hostnames.
+     */
+    public function withHost ( $host )
+    {
+        $clone       = clone $this;
+        $clone->host = $host;
+        
+        return $clone;
+    }
+    
+    /**
+     * Return an instance with the specified port.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified port.
+     *
+     * Implementations MUST raise an exception for ports outside the
+     * established TCP and UDP port ranges.
+     *
+     * A null value provided for the port is equivalent to removing the port
+     * information.
+     *
+     * @param null|int $port The port to use with the new instance; a null value
+     *                       removes the port information.
+     *
+     * @return self A new instance with the specified port.
+     * @throws \InvalidArgumentException for invalid ports.
+     */
+    public function withPort ( $port )
+    {
+        $port        = $this->filterPort( $port );
+        $clone       = clone $this;
+        $clone->port = $port;
+        
+        return $clone;
+    }
+    
+    /**
+     * Return an instance with the specified path.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified path.
+     *
+     * The path can either be empty or absolute (starting with a slash) or
+     * rootless (not starting with a slash). Implementations MUST support all
+     * three syntaxes.
+     *
+     * If the path is intended to be domain-relative rather than path relative then
+     * it must begin with a slash ("/"). Paths not starting with a slash ("/")
+     * are assumed to be relative to some base path known to the application or
+     * consumer.
+     *
+     * Users can provide both encoded and decoded path characters.
+     * Implementations ensure the correct encoding as outlined in getPath().
+     *
+     * @param string $path The path to use with the new instance.
+     *
+     * @return self A new instance with the specified path.
+     * @throws \InvalidArgumentException for invalid paths.
+     */
+    public function withPath ( $path )
+    {
+        if ( !is_string( $path ) ) {
+            throw new InvalidArgumentException( 'Uri path must be a string' );
+        }
+        
+        $clone       = clone $this;
+        $clone->path = $this->filterPath( $path );
+        
+        // if the path is absolute, then clear basePath
+        if ( substr( $path, 0, 1 ) == '/' ) {
+            $clone->basePath = '';
+        }
+        
+        return $clone;
+    }
+    
+    /**
+     * Return an instance with the specified query string.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified query string.
+     *
+     * Users can provide both encoded and decoded query characters.
+     * Implementations ensure the correct encoding as outlined in getQuery().
+     *
+     * An empty query string value is equivalent to removing the query string.
+     *
+     * @param string $query The query string to use with the new instance.
+     *
+     * @return self A new instance with the specified query string.
+     * @throws \InvalidArgumentException for invalid query strings.
+     */
+    public function withQuery ( $query )
+    {
+        if ( !is_string( $query ) && !method_exists( $query, '__toString' ) ) {
+            throw new InvalidArgumentException( 'Uri query must be a string' );
+        }
+        $query        = ltrim( (string)$query, '?' );
+        $clone        = clone $this;
+        $clone->query = $this->filterQuery( $query );
+        
+        return $clone;
+    }
+    
+    /**
+     * Return an instance with the specified URI fragment.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified URI fragment.
+     *
+     * Users can provide both encoded and decoded fragment characters.
+     * Implementations ensure the correct encoding as outlined in getFragment().
+     *
+     * An empty fragment value is equivalent to removing the fragment.
+     *
+     * @param string $fragment The fragment to use with the new instance.
+     *
+     * @return self A new instance with the specified fragment.
+     */
+    public function withFragment ( $fragment )
+    {
+        if ( !is_string( $fragment ) && !method_exists( $fragment, '__toString' ) ) {
+            throw new InvalidArgumentException( 'Uri fragment must be a string' );
+        }
+        $fragment        = ltrim( (string)$fragment, '#' );
+        $clone           = clone $this;
+        $clone->fragment = $this->filterQuery( $fragment );
+        
+        return $clone;
+    }
+    
     /********************************************************************************
-     * Scheme
+     * Path
      *******************************************************************************/
-
+    
+    /**
+     * Return the string representation as a URI reference.
+     *
+     * Depending on which components of the URI are present, the resulting
+     * string is either a full URI or relative reference according to RFC 3986,
+     * Section 4.1. The method concatenates the various components of the URI,
+     * using the appropriate delimiters:
+     *
+     * - If a scheme is present, it MUST be suffixed by ":".
+     * - If an authority is present, it MUST be prefixed by "//".
+     * - The path can be concatenated without delimiters. But there are two
+     *   cases where the path has to be adjusted to make the URI reference
+     *   valid as PHP does not allow to throw an exception in __toString():
+     *     - If the path is rootless and an authority is present, the path MUST
+     *       be prefixed by "/".
+     *     - If the path is starting with more than one "/" and no authority is
+     *       present, the starting slashes MUST be reduced to one.
+     * - If a query is present, it MUST be prefixed by "?".
+     * - If a fragment is present, it MUST be prefixed by "#".
+     *
+     * @see http://tools.ietf.org/html/rfc3986#section-4.1
+     * @return string
+     */
+    public function __toString ()
+    {
+        $scheme    = $this->getScheme();
+        $authority = $this->getAuthority();
+        $basePath  = $this->getBasePath();
+        $path      = $this->getPath();
+        $query     = $this->getQuery();
+        $fragment  = $this->getFragment();
+        
+        $path = $basePath . '/' . ltrim( $path, '/' );
+        
+        return ( $scheme !== '' ? $scheme . ':' : '' )
+               . ( $authority !== '' ? '//' . $authority : '' )
+               . $path
+               . ( $query !== '' ? '?' . $query : '' )
+               . ( $fragment !== '' ? '#' . $fragment : '' );
+    }
+    
     /**
      * Retrieve the scheme component of the URI.
      *
@@ -247,68 +627,11 @@ class Uri implements UriInterface
      * @see https://tools.ietf.org/html/rfc3986#section-3.1
      * @return string The URI scheme.
      */
-    public function getScheme()
+    public function getScheme ()
     {
         return $this->scheme;
     }
-
-    /**
-     * Return an instance with the specified scheme.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified scheme.
-     *
-     * Implementations MUST support the schemes "http" and "https" case
-     * insensitively, and MAY accommodate other schemes if required.
-     *
-     * An empty scheme is equivalent to removing the scheme.
-     *
-     * @param string $scheme The scheme to use with the new instance.
-     * @return self A new instance with the specified scheme.
-     * @throws \InvalidArgumentException for invalid or unsupported schemes.
-     */
-    public function withScheme($scheme)
-    {
-        $scheme = $this->filterScheme($scheme);
-        $clone = clone $this;
-        $clone->scheme = $scheme;
-
-        return $clone;
-    }
-
-    /**
-     * Filter Uri scheme.
-     *
-     * @param  string $scheme Raw Uri scheme.
-     * @return string
-     *
-     * @throws InvalidArgumentException If the Uri scheme is not a string.
-     * @throws InvalidArgumentException If Uri scheme is not "", "https", or "http".
-     */
-    protected function filterScheme($scheme)
-    {
-        static $valid = [
-            '' => true,
-            'https' => true,
-            'http' => true,
-        ];
-
-        if (!is_string($scheme) && !method_exists($scheme, '__toString')) {
-            throw new InvalidArgumentException('Uri scheme must be a string');
-        }
-
-        $scheme = str_replace('://', '', strtolower((string)$scheme));
-        if (!isset($valid[$scheme])) {
-            throw new InvalidArgumentException('Uri scheme must be one of: "", "https", "http"');
-        }
-
-        return $scheme;
-    }
-
-    /********************************************************************************
-     * Authority
-     *******************************************************************************/
-
+    
     /**
      * Retrieve the authority component of the URI.
      *
@@ -327,15 +650,15 @@ class Uri implements UriInterface
      * @see https://tools.ietf.org/html/rfc3986#section-3.2
      * @return string The URI authority, in "[user-info@]host[:port]" format.
      */
-    public function getAuthority()
+    public function getAuthority ()
     {
         $userInfo = $this->getUserInfo();
-        $host = $this->getHost();
-        $port = $this->getPort();
-
-        return ($userInfo !== '' ? $userInfo . '@' : '') . $host . ($port !== null ? ':' . $port : '');
+        $host     = $this->getHost();
+        $port     = $this->getPort();
+        
+        return ( $userInfo !== '' ? $userInfo . '@' : '' ) . $host . ( $port !== null ? ':' . $port : '' );
     }
-
+    
     /**
      * Retrieve the user information component of the URI.
      *
@@ -351,55 +674,11 @@ class Uri implements UriInterface
      *
      * @return string The URI user information, in "username[:password]" format.
      */
-    public function getUserInfo()
+    public function getUserInfo ()
     {
-        return $this->user . ($this->password !== '' ? ':' . $this->password : '');
+        return $this->user . ( $this->password !== '' ? ':' . $this->password : '' );
     }
-
-    /**
-     * Return an instance with the specified user information.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified user information.
-     *
-     * Password is optional, but the user information MUST include the
-     * user; an empty string for the user is equivalent to removing user
-     * information.
-     *
-     * @param string $user The user name to use for authority.
-     * @param null|string $password The password associated with $user.
-     * @return self A new instance with the specified user information.
-     */
-    public function withUserInfo($user, $password = null)
-    {
-        $clone = clone $this;
-        $clone->user = $this->filterUserInfo($user);
-        if ('' !== $clone->user) {
-            $clone->password = !in_array($password, [null, ''], true) ? $this->filterUserInfo($password) : '';
-        } else {
-            $clone->password = '';
-        }
-
-        return $clone;
-    }
-
-    /**
-     * Filters the user info string.
-     *
-     * @param string $query The raw uri query string.
-     * @return string The percent-encoded query string.
-     */
-    protected function filterUserInfo($query)
-    {
-        return preg_replace_callback(
-            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=]+|%(?![A-Fa-f0-9]{2}))/u',
-            function ($match) {
-                return rawurlencode($match[0]);
-            },
-            $query
-        );
-    }
-
+    
     /**
      * Retrieve the host component of the URI.
      *
@@ -411,31 +690,15 @@ class Uri implements UriInterface
      * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
      * @return string The URI host.
      */
-    public function getHost()
+    public function getHost ()
     {
         return $this->host;
     }
-
-    /**
-     * Return an instance with the specified host.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified host.
-     *
-     * An empty host value is equivalent to removing the host.
-     *
-     * @param string $host The hostname to use with the new instance.
-     * @return self A new instance with the specified host.
-     * @throws \InvalidArgumentException for invalid hostnames.
-     */
-    public function withHost($host)
-    {
-        $clone = clone $this;
-        $clone->host = $host;
-
-        return $clone;
-    }
-
+    
+    /********************************************************************************
+     * Query
+     *******************************************************************************/
+    
     /**
      * Retrieve the port component of the URI.
      *
@@ -451,68 +714,40 @@ class Uri implements UriInterface
      *
      * @return null|int The URI port.
      */
-    public function getPort()
+    public function getPort ()
     {
         return $this->port && !$this->hasStandardPort() ? $this->port : null;
     }
-
-    /**
-     * Return an instance with the specified port.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified port.
-     *
-     * Implementations MUST raise an exception for ports outside the
-     * established TCP and UDP port ranges.
-     *
-     * A null value provided for the port is equivalent to removing the port
-     * information.
-     *
-     * @param null|int $port The port to use with the new instance; a null value
-     *     removes the port information.
-     * @return self A new instance with the specified port.
-     * @throws \InvalidArgumentException for invalid ports.
-     */
-    public function withPort($port)
-    {
-        $port = $this->filterPort($port);
-        $clone = clone $this;
-        $clone->port = $port;
-
-        return $clone;
-    }
-
+    
     /**
      * Does this Uri use a standard port?
      *
      * @return bool
      */
-    protected function hasStandardPort()
+    protected function hasStandardPort ()
     {
-        return ($this->scheme === 'http' && $this->port === 80) || ($this->scheme === 'https' && $this->port === 443);
+        return ( $this->scheme === 'http' && $this->port === 80 ) || ( $this->scheme === 'https' && $this->port === 443 );
     }
-
+    
     /**
-     * Filter Uri port.
+     * Retrieve the base path segment of the URI.
      *
-     * @param  null|int $port The Uri port number.
-     * @return null|int
+     * Note: This method is not part of the PSR-7 standard.
      *
-     * @throws InvalidArgumentException If the port is invalid.
+     * This method MUST return a string; if no path is present it MUST return
+     * an empty string.
+     *
+     * @return string The base path segment of the URI.
      */
-    protected function filterPort($port)
+    public function getBasePath ()
     {
-        if (is_null($port) || (is_integer($port) && ($port >= 1 && $port <= 65535))) {
-            return $port;
-        }
-
-        throw new InvalidArgumentException('Uri port must be null or an integer between 1 and 65535 (inclusive)');
+        return $this->basePath;
     }
-
+    
     /********************************************************************************
-     * Path
+     * Fragment
      *******************************************************************************/
-
+    
     /**
      * Retrieve the path component of the URI.
      *
@@ -538,117 +773,11 @@ class Uri implements UriInterface
      * @see https://tools.ietf.org/html/rfc3986#section-3.3
      * @return string The URI path.
      */
-    public function getPath()
+    public function getPath ()
     {
         return $this->path;
     }
-
-    /**
-     * Return an instance with the specified path.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified path.
-     *
-     * The path can either be empty or absolute (starting with a slash) or
-     * rootless (not starting with a slash). Implementations MUST support all
-     * three syntaxes.
-     *
-     * If the path is intended to be domain-relative rather than path relative then
-     * it must begin with a slash ("/"). Paths not starting with a slash ("/")
-     * are assumed to be relative to some base path known to the application or
-     * consumer.
-     *
-     * Users can provide both encoded and decoded path characters.
-     * Implementations ensure the correct encoding as outlined in getPath().
-     *
-     * @param string $path The path to use with the new instance.
-     * @return self A new instance with the specified path.
-     * @throws \InvalidArgumentException for invalid paths.
-     */
-    public function withPath($path)
-    {
-        if (!is_string($path)) {
-            throw new InvalidArgumentException('Uri path must be a string');
-        }
-
-        $clone = clone $this;
-        $clone->path = $this->filterPath($path);
-
-        // if the path is absolute, then clear basePath
-        if (substr($path, 0, 1) == '/') {
-            $clone->basePath = '';
-        }
-
-        return $clone;
-    }
-
-    /**
-     * Retrieve the base path segment of the URI.
-     *
-     * Note: This method is not part of the PSR-7 standard.
-     *
-     * This method MUST return a string; if no path is present it MUST return
-     * an empty string.
-     *
-     * @return string The base path segment of the URI.
-     */
-    public function getBasePath()
-    {
-        return $this->basePath;
-    }
-
-    /**
-     * Set base path.
-     *
-     * Note: This method is not part of the PSR-7 standard.
-     *
-     * @param  string $basePath
-     * @return self
-     */
-    public function withBasePath($basePath)
-    {
-        if (!is_string($basePath)) {
-            throw new InvalidArgumentException('Uri path must be a string');
-        }
-        if (!empty($basePath)) {
-            $basePath = '/' . trim($basePath, '/'); // <-- Trim on both sides
-        }
-        $clone = clone $this;
-
-        if ($basePath !== '/') {
-            $clone->basePath = $this->filterPath($basePath);
-        }
-
-        return $clone;
-    }
-
-    /**
-     * Filter Uri path.
-     *
-     * This method percent-encodes all reserved
-     * characters in the provided path string. This method
-     * will NOT double-encode characters that are already
-     * percent-encoded.
-     *
-     * @param  string $path The raw uri path.
-     * @return string       The RFC 3986 percent-encoded uri path.
-     * @link   http://www.faqs.org/rfcs/rfc3986.html
-     */
-    protected function filterPath($path)
-    {
-        return preg_replace_callback(
-            '/(?:[^a-zA-Z0-9_\-\.~:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
-            function ($match) {
-                return rawurlencode($match[0]);
-            },
-            $path
-        );
-    }
-
-    /********************************************************************************
-     * Query
-     *******************************************************************************/
-
+    
     /**
      * Retrieve the query string of the URI.
      *
@@ -669,59 +798,15 @@ class Uri implements UriInterface
      * @see https://tools.ietf.org/html/rfc3986#section-3.4
      * @return string The URI query string.
      */
-    public function getQuery()
+    public function getQuery ()
     {
         return $this->query;
     }
-
-    /**
-     * Return an instance with the specified query string.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified query string.
-     *
-     * Users can provide both encoded and decoded query characters.
-     * Implementations ensure the correct encoding as outlined in getQuery().
-     *
-     * An empty query string value is equivalent to removing the query string.
-     *
-     * @param string $query The query string to use with the new instance.
-     * @return self A new instance with the specified query string.
-     * @throws \InvalidArgumentException for invalid query strings.
-     */
-    public function withQuery($query)
-    {
-        if (!is_string($query) && !method_exists($query, '__toString')) {
-            throw new InvalidArgumentException('Uri query must be a string');
-        }
-        $query = ltrim((string)$query, '?');
-        $clone = clone $this;
-        $clone->query = $this->filterQuery($query);
-
-        return $clone;
-    }
-
-    /**
-     * Filters the query string or fragment of a URI.
-     *
-     * @param string $query The raw uri query string.
-     * @return string The percent-encoded query string.
-     */
-    protected function filterQuery($query)
-    {
-        return preg_replace_callback(
-            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/',
-            function ($match) {
-                return rawurlencode($match[0]);
-            },
-            $query
-        );
-    }
-
+    
     /********************************************************************************
-     * Fragment
+     * Helpers
      *******************************************************************************/
-
+    
     /**
      * Retrieve the fragment component of the URI.
      *
@@ -738,82 +823,11 @@ class Uri implements UriInterface
      * @see https://tools.ietf.org/html/rfc3986#section-3.5
      * @return string The URI fragment.
      */
-    public function getFragment()
+    public function getFragment ()
     {
         return $this->fragment;
     }
-
-    /**
-     * Return an instance with the specified URI fragment.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified URI fragment.
-     *
-     * Users can provide both encoded and decoded fragment characters.
-     * Implementations ensure the correct encoding as outlined in getFragment().
-     *
-     * An empty fragment value is equivalent to removing the fragment.
-     *
-     * @param string $fragment The fragment to use with the new instance.
-     * @return self A new instance with the specified fragment.
-     */
-    public function withFragment($fragment)
-    {
-        if (!is_string($fragment) && !method_exists($fragment, '__toString')) {
-            throw new InvalidArgumentException('Uri fragment must be a string');
-        }
-        $fragment = ltrim((string)$fragment, '#');
-        $clone = clone $this;
-        $clone->fragment = $this->filterQuery($fragment);
-
-        return $clone;
-    }
-
-    /********************************************************************************
-     * Helpers
-     *******************************************************************************/
-
-    /**
-     * Return the string representation as a URI reference.
-     *
-     * Depending on which components of the URI are present, the resulting
-     * string is either a full URI or relative reference according to RFC 3986,
-     * Section 4.1. The method concatenates the various components of the URI,
-     * using the appropriate delimiters:
-     *
-     * - If a scheme is present, it MUST be suffixed by ":".
-     * - If an authority is present, it MUST be prefixed by "//".
-     * - The path can be concatenated without delimiters. But there are two
-     *   cases where the path has to be adjusted to make the URI reference
-     *   valid as PHP does not allow to throw an exception in __toString():
-     *     - If the path is rootless and an authority is present, the path MUST
-     *       be prefixed by "/".
-     *     - If the path is starting with more than one "/" and no authority is
-     *       present, the starting slashes MUST be reduced to one.
-     * - If a query is present, it MUST be prefixed by "?".
-     * - If a fragment is present, it MUST be prefixed by "#".
-     *
-     * @see http://tools.ietf.org/html/rfc3986#section-4.1
-     * @return string
-     */
-    public function __toString()
-    {
-        $scheme = $this->getScheme();
-        $authority = $this->getAuthority();
-        $basePath = $this->getBasePath();
-        $path = $this->getPath();
-        $query = $this->getQuery();
-        $fragment = $this->getFragment();
-
-        $path = $basePath . '/' . ltrim($path, '/');
-
-        return ($scheme !== '' ? $scheme . ':' : '')
-            . ($authority !== '' ? '//' . $authority : '')
-            . $path
-            . ($query !== '' ? '?' . $query : '')
-            . ($fragment !== '' ? '#' . $fragment : '');
-    }
-
+    
     /**
      * Return the fully qualified base URL.
      *
@@ -823,18 +837,18 @@ class Uri implements UriInterface
      *
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl ()
     {
-        $scheme = $this->getScheme();
+        $scheme    = $this->getScheme();
         $authority = $this->getAuthority();
-        $basePath = $this->getBasePath();
-
-        if ($authority !== '' && substr($basePath, 0, 1) !== '/') {
+        $basePath  = $this->getBasePath();
+        
+        if ( $authority !== '' && substr( $basePath, 0, 1 ) !== '/' ) {
             $basePath = $basePath . '/' . $basePath;
         }
-
-        return ($scheme !== '' ? $scheme . ':' : '')
-            . ($authority ? '//' . $authority : '')
-            . rtrim($basePath, '/');
+        
+        return ( $scheme !== '' ? $scheme . ':' : '' )
+               . ( $authority ? '//' . $authority : '' )
+               . rtrim( $basePath, '/' );
     }
 }

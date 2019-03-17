@@ -1,4 +1,5 @@
 <?php
+
 namespace System\Interfaces;
 
 use System\App;
@@ -16,8 +17,8 @@ interface RouteGroupInterface
      *
      * @return string
      */
-    public function getPattern();
-
+    public function getPattern ();
+    
     /**
      * Prepend middleware to the group middleware collection
      *
@@ -25,8 +26,8 @@ interface RouteGroupInterface
      *
      * @return RouteGroupInterface
      */
-    public function add($callable);
-
+    public function add ( $callable );
+    
     /**
      * Execute route group callable in the context of the System App
      *
@@ -35,5 +36,5 @@ interface RouteGroupInterface
      *
      * @param App $app
      */
-    public function __invoke(App $app);
+    public function __invoke ( App $app );
 }

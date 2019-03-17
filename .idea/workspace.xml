@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="06c7185e-a1b8-4838-a143-45f8cf52ddeb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/code-comments.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/composerJson.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/yii2settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bootstrap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/dependencies.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/dependencies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/middleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/middleware.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/Home/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/Home/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/debugbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/debugbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/debugbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/debugbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/openhandler.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/openhandler.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/openhandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/openhandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/vendor/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/vendor/font-awesome/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/vendor/highlightjs/styles/github.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/vendor/highlightjs/styles/github.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/mails/widget.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/mails/widget.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/mails/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/mails/widget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/sqlqueries/widget.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/sqlqueries/widget.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/sqlqueries/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/sqlqueries/widget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/templates/widget.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/templates/widget.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/templates/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/maximebf/debugbar/src/DebugBar/Resources/widgets/templates/widget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/App.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/App.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/BaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/CallableResolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/CallableResolver.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/CallableResolverAwareTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/CallableResolverAwareTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Collection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Container.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Container.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Csrf/Guard.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Csrf/Guard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/DefaultServicesProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/DefaultServicesProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/DeferredCallable.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/DeferredCallable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Exception/ContainerException.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception/ContainerException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Exception/ContainerValueNotFoundException.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception/ContainerValueNotFoundException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Exception/InvalidMethodException.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception/InvalidMethodException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Exception/MethodNotAllowedException.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception/MethodNotAllowedException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Exception/SystemException.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception/SystemException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Flash/Messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Flash/Messages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/AbstractError.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/AbstractError.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/AbstractHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/AbstractHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/Error.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/Error.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/NotAllowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/NotAllowed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/NotFound.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/NotFound.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/PhpError.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/PhpError.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/Strategies/RequestResponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/Strategies/RequestResponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Handlers/Strategies/RequestResponseArgs.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Handlers/Strategies/RequestResponseArgs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Body.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Body.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Cookies.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Cookies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Environment.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Environment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Headers.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Headers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Message.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Request.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/RequestBody.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/RequestBody.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Response.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Response.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/StatusCode.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/StatusCode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Stream.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Stream.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/UploadedFile.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/UploadedFile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Http/Uri.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Http/Uri.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/CallableResolverInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/CallableResolverInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/CollectionInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/CollectionInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/Http/CookiesInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/Http/CookiesInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/Http/EnvironmentInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/Http/EnvironmentInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/Http/HeadersInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/Http/HeadersInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/InvocationStrategyInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/InvocationStrategyInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/RouteGroupInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/RouteGroupInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/RouteInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/RouteInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Interfaces/RouterInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Interfaces/RouterInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/MiddlewareAwareTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/MiddlewareAwareTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Routable.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Routable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Route.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/RouteGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/RouteGroup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Views/PhpRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Views/PhpRenderer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Views/Twig.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Views/Twig.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/Views/TwigExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Views/TwigExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/DeferredCallable.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/Router.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/RouteGroup.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/Route.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5593">
+              <caret line="334" column="6" lean-forward="true" selection-start-line="334" selection-start-column="6" selection-end-line="334" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/Http/Body.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/Http/Cookies.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1116" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/Http/Environment.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/system/Http/Headers.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/system/App.php" />
+        <option value="$PROJECT_DIR$/system/Route.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/maximebf/debugbar" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/nikic/fast-route" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/container-interop/container-interop" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="development" type="b2602c69:ProjectViewProjectNode" />
+              <item name="development" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="development" type="b2602c69:ProjectViewProjectNode" />
+              <item name="development" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="development" type="b2602c69:ProjectViewProjectNode" />
+              <item name="development" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Home" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="development" type="b2602c69:ProjectViewProjectNode" />
+              <item name="development" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Home" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="development" type="b2602c69:ProjectViewProjectNode" />
+              <item name="development" type="462c0819:PsiDirectoryNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="development" type="b2602c69:ProjectViewProjectNode" />
+              <item name="development" type="462c0819:PsiDirectoryNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="06c7185e-a1b8-4838-a143-45f8cf52ddeb" name="Default Changelist" comment="" />
+      <created>1552754345486</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1552754345486</updated>
+      <workItem from="1552754347439" duration="523000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="523000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Code comment" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Migrations" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Json Parser" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/bootstrap.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/dependencies.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/middleware.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/Home/Controllers/HomeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Interfaces/RouteInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1480" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/psr/http-message/src/UriInterface.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/App.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="286" column="5" lean-forward="true" selection-start-line="286" selection-start-column="5" selection-end-line="286" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/CallableResolverAwareTrait.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/DeferredCallable.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Router.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/RouteGroup.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5593">
+          <caret line="334" column="6" lean-forward="true" selection-start-line="334" selection-start-column="6" selection-end-line="334" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Http/Body.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Http/Cookies.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1116" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Http/Environment.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Http/Headers.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+  </component>
+</project>

@@ -1,4 +1,5 @@
 <?php
+
 namespace System;
 
 use Closure;
@@ -17,24 +18,24 @@ class RouteGroup extends Routable implements RouteGroupInterface
      * @param string   $pattern  The pattern prefix for the group
      * @param callable $callable The group callable
      */
-    public function __construct($pattern, $callable)
+    public function __construct ( $pattern, $callable )
     {
-        $this->pattern = $pattern;
+        $this->pattern  = $pattern;
         $this->callable = $callable;
     }
-
+    
     /**
      * Invoke the group to register any Routable objects within it.
      *
      * @param App $app The App instance to bind/pass to the group callable
      */
-    public function __invoke(App $app = null)
+    public function __invoke ( App $app = null )
     {
-        $callable = $this->resolveCallable($this->callable);
-        if ($callable instanceof Closure && $app !== null) {
-            $callable = $callable->bindTo($app);
+        $callable = $this->resolveCallable( $this->callable );
+        if ( $callable instanceof Closure && $app !== null ) {
+            $callable = $callable->bindTo( $app );
         }
-
-        $callable($app);
+        
+        $callable( $app );
     }
 }

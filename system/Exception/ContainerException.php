@@ -1,8 +1,9 @@
 <?php
+
 namespace System\Exception;
 
-use InvalidArgumentException;
 use Interop\Container\Exception\ContainerException as InteropContainerException;
+use InvalidArgumentException;
 
 class ContainerException extends InvalidArgumentException implements InteropContainerException
 {
